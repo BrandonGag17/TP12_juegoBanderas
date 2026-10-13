@@ -32,30 +32,28 @@ export function GameProvider({ children }) {
     setTimeLeft(15);
 
     const interval = setInterval(() => {
-      setTimeLeft((previousTime) => {
-        if (previousTime <= 1) {
-          clearInterval(interval);
-          setScore((previousScore) => previousScore - 1);
-
-          setCurrentCountry((previousCountry) => {
-            let randomIndex = Math.floor(Math.random() * countries.length);
-
-            if (countries.length > 1) {
-              while (countries[randomIndex]?.name === previousCountry?.name) {
-                randomIndex = Math.floor(Math.random() * countries.length);
-              }
-            }
-
-            return countries[randomIndex];
-          });
-          return 15;
-        }
-        return previousTime - 1;
-      });
+      setTimeLeft((previousTime) => Math.max(previousTime - 1, 0));
     }, 1000);
 
     return () => clearInterval(interval);
   }, [currentCountry, countries]);
+
+  useEffect(() => {
+    if (timeLeft !== 0 || !countries.length) return;
+
+    setScore((previousScore) => previousScore - 1);
+    setCurrentCountry((previousCountry) => {
+      let randomIndex = Math.floor(Math.random() * countries.length);
+
+      if (countries.length > 1) {
+        while (countries[randomIndex]?.name === previousCountry?.name) {
+          randomIndex = Math.floor(Math.random() * countries.length);
+        }
+      }
+
+      return countries[randomIndex];
+    });
+  }, [timeLeft, countries]);
 
   const nextCountry = () => {
     if (!countries.length) return;
@@ -110,3 +108,4 @@ export function GameProvider({ children }) {
     </GameContext.Provider>
   );
 }
+
