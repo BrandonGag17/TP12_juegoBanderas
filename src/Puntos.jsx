@@ -1,12 +1,12 @@
-import { useContext } from 'react';
-import { GameContext } from './banderas';
+﻿import { useContext } from 'react';
+import { GameContext } from './GameContext';
 
 export default function Puntos() {
-  const { puntos } = useContext(GameContext);
+  const { score } = useContext(GameContext);
 
   return (
     <div>
-      <p>Puntos: {puntos}</p>
+      <p>Puntos: {score}</p>
     </div>
   );
 }

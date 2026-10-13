@@ -1,29 +1,29 @@
-import { useContext, useState } from 'react';
-import { GameContext } from './banderas';
+﻿import { useContext, useState } from 'react';
+import { GameContext } from './GameContext';
 
 export default function Arriesgar() {
-  const { handleAdivinar, paisActual } = useContext(GameContext);
+  const { handleGuess, currentCountry } = useContext(GameContext);
   const [pais, setPais] = useState('');
   const [mensaje, setMensaje] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    if (!paisActual) {
+    if (!currentCountry) {
       setMensaje('Todavía no hay una bandera cargada.');
       return;
     }
 
     if (!pais.trim()) {
-      setMensaje('Escribí un nombre de país.');
+      setMensaje('Escribi un nombre de pai­s.');
       return;
     }
 
-    const acerto = handleAdivinar(pais);
+    const acerto = handleGuess(pais);
     setMensaje(
       acerto
-        ? `¡Correcto! La bandera es de ${paisActual.name}.`
-        : `Incorrecto, era ${paisActual.name}.`
+        ? `Muy bieeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeen la bandera es de ${currentCountry.name}.`
+        : `Incorrecto, era ${currentCountry.name}.`
     );
     setPais('');
   };
@@ -34,7 +34,7 @@ export default function Arriesgar() {
         type="text"
         value={pais}
         onChange={(e) => setPais(e.target.value)}
-        placeholder="Escribí el nombre del país"
+        placeholder="EscribÃ­ el nombre del paÃ­s"
       />
       <button type="submit">Arriesgar</button>
 

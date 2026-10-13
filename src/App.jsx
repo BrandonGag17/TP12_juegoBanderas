@@ -1,12 +1,12 @@
-import { useContext } from 'react';
+﻿import { useContext } from 'react';
 import './App.css';
-import ListaBanderas, { GameContext } from './banderas';
+import { GameContext, GameProvider } from './GameContext';
 import Timer from './Timer';
 import Arriesgar from './Arriesgar';
 import Puntos from './Puntos';
 
 function Juego() {
-  const { paisActual } = useContext(GameContext);
+  const { currentCountry } = useContext(GameContext);
 
   return (
     <div className="game-shell">
@@ -17,11 +17,11 @@ function Juego() {
         </header>
 
         <div className="flag-panel">
-          {paisActual ? (
+          {currentCountry ? (
             <img
               className="flag-image"
-              src={paisActual.flag}
-              alt={paisActual.name}
+              src={currentCountry.flag}
+              alt={currentCountry.name}
             />
           ) : (
             <p className="loading-text">Cargando bandera...</p>
@@ -36,8 +36,10 @@ function Juego() {
 
 export default function App() {
   return (
-    <ListaBanderas>
+    <GameProvider>
       <Juego />
-    </ListaBanderas>
+    </GameProvider>
   );
 }
+
+
